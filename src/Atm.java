@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.*;
 
-public class ATM {
+public class Atm {
 
     //use recurrent algorithm for combinations
     static void findCombinationsUtil(int[] arr, int[] change, int index, int num, int reducedNum, Vector res) {
