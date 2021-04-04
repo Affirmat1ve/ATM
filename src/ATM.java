@@ -69,8 +69,10 @@ public class ATM {
     private static int inputControl(Scanner in) {
         int n = 0;
         try {
+            if(!in.hasNextInt()) {throw new IllegalArgumentException("Invalid input");}
             n = in.nextInt();
-            if (n < 0) throw new IllegalArgumentException("Invalid input");
+            if (n <= 0) throw new IllegalArgumentException("Invalid input");
+
         } catch (IllegalArgumentException iae) {
             System.out.print("Invalid input");
             System.exit(0);
@@ -78,8 +80,18 @@ public class ATM {
         return n;
     }
 
+    private static boolean uniquecheck(int a, int[] massStringA) {
+        for (int s:massStringA) {
+            if (a==s) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Driver code
     public static void main(String[] args) {
+        int q;
         Scanner in = new Scanner(System.in);
         System.out.print("Input an amount of withdrawal: ");
         int withdr = inputControl(in);
@@ -88,8 +100,11 @@ public class ATM {
         System.out.print("Input banknote value: ");
         int[] bnval = new int[qnt];
         for (int i = 0; i < qnt; i++) {
-            bnval[i] = inputControl(in);
-        }
+                q = inputControl(in);
+                if (uniquecheck(q,bnval)){
+                    bnval[i] = q;
+                } else {--i; System.out.print("Banknote value already exist \n");}
+            }
         Arrays.sort(bnval);
 
         findCombinations(bnval, withdr);
